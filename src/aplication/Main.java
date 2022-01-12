@@ -29,20 +29,19 @@ public class Main {
 
         // Create boards
         Board userBoard = new UserBoard(player);
-        Board pcBoard = new PcBoard();
+        Board pcBoard = new UserBoard("PC");
 
         // Print user board without placing ships
         userBoard.printBoard();
+        pcBoard.printBoard();
 
         String[] move = setPositionAttack(input);
         String row = move[0];
         int column = Integer.parseInt(move[1]);
 
 
-
-
         //userBoard.fillBoard();
-        //userBoard.fillBoard(move);
+        userBoard.fillBoard(row, column, pcBoard);
 
         input.close();
     }

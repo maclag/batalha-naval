@@ -16,8 +16,9 @@ public abstract class Board {
         this.username = username;
     }
 
-    public Board() {
-        fillBoard();
+    protected Board() {
+        String[] position = placingShips();
+        fillBoardWithShips(position);
     }
 
     public String[][] getBoard() {
@@ -68,6 +69,30 @@ public abstract class Board {
         System.out.println("Coluna: " + column);
 
         gameBoard[row][column] = String.valueOf(Positions.SHIP_ON_WATER);
+
+        printBoard();
+    }
+
+    public void fillBoard (String row, int column, Board opponentBoard) {
+        int linha = row.toLowerCase().charAt(0) - 97;
+        String[][] otherBoard = opponentBoard.getBoard();
+        String content = otherBoard[linha][column];
+        String myBoardContent = gameBoard[linha][column];
+
+        System.out.println("Linha: " + linha);
+        System.out.println("Coluna: " + column);
+
+        // corrigir: NullPointerException
+//        switch (content) {
+//            case "N":
+//                myBoardContent = Objects.equals(myBoardContent, "N") ? String.valueOf(Positions.SHIP_ON_ATTACK) : String.valueOf(Positions.ATTACK);
+//                break;
+//            case " ":
+//                myBoardContent = Objects.equals(myBoardContent, "N") ? String.valueOf(Positions.SHIP_ON_WATER) : String.valueOf(Positions.WATER);
+//                break;
+//            default:
+//                System.out.println("Nothing has changed.");
+//        }
 
         printBoard();
     }
