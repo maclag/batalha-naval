@@ -64,7 +64,7 @@ public final class Questions {
                 move = input.nextLine().split("");
                 rowByUser = move[0];
                 columnByUser = Integer.parseInt(move[1]);
-                if (rowByUser.matches("[a-hA-H]") && String.valueOf(columnByUser).matches("[0-9]") && move.length == 2) {
+                if (rowByUser.matches("[a-jA-J]") && String.valueOf(columnByUser).matches("[0-9]") && move.length == 2) {
                     break;
                 } else {
                     System.out.println("\n" + errorPositionMsg);

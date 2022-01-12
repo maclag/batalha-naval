@@ -1,5 +1,7 @@
 package game;
 
+import java.util.Objects;
+
 public abstract class Board {
 
     public static final int BOARD_SIZE = 10;
@@ -8,7 +10,9 @@ public abstract class Board {
     private String username;
     private final String[][] gameBoard = new String[BOARD_SIZE][BOARD_SIZE];
 
-    public Board (String username) {
+    protected Board (String username) {
+        String[] position = placingShips();
+        fillBoardWithShips(position);
         this.username = username;
     }
 
@@ -16,13 +20,44 @@ public abstract class Board {
         fillBoard();
     }
 
-    public void fillBoard() {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                gameBoard[i][j] = "-";
+    public String[][] getBoard() {
+        return gameBoard;
+    }
+
+    public String[] placingShips() {
+        String[] ships = new String[10];
+        int total = 0;
+
+        while (total != 10) {
+            int linha = (int) (Math.random()*10);
+            int coluna = (int) (Math.random()*10);
+
+            boolean isPlaced = false;
+            String positionStr = Integer.toString(linha) + coluna;
+
+            for (String ship : ships) {
+                if (Objects.equals(ship, positionStr)) {
+                    isPlaced = true;
+                    break;
+                }
+            }
+
+            if (!isPlaced) {
+                ships[total] = positionStr;
+                total++;
             }
         }
-        //printBoard();
+
+        return ships;
+    }
+
+    public void fillBoardWithShips (String[] positions) {
+        for (int i = 0; i < 10; i++) {
+            int row = positions[i].charAt(0) - 48;
+            int column = positions[i].charAt(1) - 48;
+
+            gameBoard[row][column] = String.valueOf(Positions.SHIP);
+        }
     }
 
     public void fillBoard (String position) {
@@ -32,7 +67,7 @@ public abstract class Board {
         System.out.println("Linha: " + row);
         System.out.println("Coluna: " + column);
 
-        gameBoard[row][column] = "A";
+        gameBoard[row][column] = String.valueOf(Positions.SHIP_ON_WATER);
 
         printBoard();
     }
@@ -53,7 +88,7 @@ public abstract class Board {
             for (String cell : rows) {
                 System.out.print(cell == null ? "   |" : " " + cell + " |");
             }
-            System.out.println("");
+            System.out.println();
             counter++;
         }
         System.out.println(LINE);
@@ -64,9 +99,7 @@ public abstract class Board {
         int lineLength = LINE.length();
         int wordLength = word.length();
 
-        for (int i = 0; i < (lineLength - wordLength) / 2; i++) {
-            strCentralized.append(" ");
-        }
+        strCentralized.append(" ".repeat(Math.max(0, (lineLength - wordLength) / 2)));
         strCentralized.append(word);
 
         return strCentralized.toString();

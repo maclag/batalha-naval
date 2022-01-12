@@ -2,12 +2,12 @@ package game;
 
 public enum Positions {
 
-    // alterar
-    ATTACKED("X"),
     SHIP("N"),
-    EMPTY(" "),
-    SHIP_ON_ATTACK("*"),
-    SHIP_ON_WATER("A");
+    ATTACK("*"),
+    WATER("-"),
+    SHIP_ON_ATTACK("X"),
+    SHIP_ON_WATER("n"),
+    EMPTY(" ");
 
     private final String name;
 
@@ -17,6 +17,6 @@ public enum Positions {
 
     @Override
     public String toString() {
-        return super.toString();
+        return name;
     }
 }
