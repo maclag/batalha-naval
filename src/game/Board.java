@@ -76,23 +76,19 @@ public abstract class Board {
     public void fillBoard (String row, int column, Board opponentBoard) {
         int linha = row.toLowerCase().charAt(0) - 97;
         String[][] otherBoard = opponentBoard.getBoard();
-        String content = otherBoard[linha][column];
-        String myBoardContent = gameBoard[linha][column];
+        String content = otherBoard[linha][column] != null ? otherBoard[linha][column] : "";
+        String myBoardContent = gameBoard[linha][column] != null ? gameBoard[linha][column] : "";
 
-        System.out.println("Linha: " + linha);
-        System.out.println("Coluna: " + column);
-
-        // corrigir: NullPointerException
-//        switch (content) {
-//            case "N":
-//                myBoardContent = Objects.equals(myBoardContent, "N") ? String.valueOf(Positions.SHIP_ON_ATTACK) : String.valueOf(Positions.ATTACK);
-//                break;
-//            case " ":
-//                myBoardContent = Objects.equals(myBoardContent, "N") ? String.valueOf(Positions.SHIP_ON_WATER) : String.valueOf(Positions.WATER);
-//                break;
-//            default:
-//                System.out.println("Nothing has changed.");
-//        }
+        switch (content) {
+            case "N":
+                gameBoard[linha][column] = Objects.equals(myBoardContent, "N") ? String.valueOf(Positions.SHIP_ON_ATTACK) : String.valueOf(Positions.ATTACK);
+                break;
+            case "":
+                gameBoard[linha][column] = Objects.equals(myBoardContent, "N") ? String.valueOf(Positions.SHIP_ON_WATER) : String.valueOf(Positions.WATER);
+                break;
+            default:
+                System.out.println("Nothing has changed.");
+        }
 
         printBoard();
     }
