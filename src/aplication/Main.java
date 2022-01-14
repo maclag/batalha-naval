@@ -1,7 +1,5 @@
 package aplication;
 
-import game.Board;
-import game.GameMode;
 import game.PcBoard;
 import game.UserBoard;
 
@@ -15,37 +13,43 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
 
-        String player = setName(input);
-        int choice = setMode(input);
+        String[] move;
+        String row;
+        int column;
 
-        GameMode mode;
-        if (choice == 1) {
-            mode = GameMode.MANUAL;
-            System.out.println("Manual mode on!");
-        } else if (choice == 2) {
-            mode = GameMode.AUTOMATIC;
-            System.out.println("Automatic mode on!");
+        String player = setName(input);
+        int mode = setMode(input);
+
+        // Create both boards
+        UserBoard userBoard = new UserBoard(player, mode, input);
+        PcBoard pcBoard = new PcBoard();
+
+        // Print user board
+        userBoard.printBoard();
+        //pcBoard.printBoard();
+
+        // Starting the game!
+        do {
+            do {
+                move = userBoard.setPositionAttackUser(input);
+                row = move[0];
+                column = Integer.parseInt(move[1]);
+            } while (userBoard.cantAttack(row, column));
+            userBoard.fillBoardAttack(row, column, pcBoard);
+            pcBoard.fillBoardAttack(userBoard);
+            userBoard.printBoard();
+        } while (!userBoard.isTheWinner() && !pcBoard.isTheWinner());
+
+        System.out.println();
+        if (userBoard.isTheWinner()) {
+            System.out.println("Congratulations! You won the game!!!");
+        } else {
+            System.out.println("You lost... try again :(");
         }
 
-        // Create boards
-        Board userBoard = new UserBoard(player);
-        Board pcBoard = new UserBoard("PC");
-
-        // Print user board without placing ships
         userBoard.printBoard();
         pcBoard.printBoard();
 
-        String[] move = setPositionAttack(input);
-        String row = move[0];
-        int column = Integer.parseInt(move[1]);
-
-
-        //userBoard.fillBoard();
-        userBoard.fillBoard(row, column, pcBoard);
-
         input.close();
     }
-
-
-
 }

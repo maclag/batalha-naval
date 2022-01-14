@@ -1,5 +1,7 @@
 package game;
 
 public interface Functions {
-    void attack (String row, int column);
+    boolean cantAttack (String row, int column);
+    void fillBoardAttack (String row, int column, Board opponentBoard);
+    boolean isTheWinner();
 }

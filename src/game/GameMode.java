@@ -13,6 +13,6 @@ public enum GameMode {
 
     @Override
     public String toString() {
-        return super.toString();
+        return name;
     }
 }
