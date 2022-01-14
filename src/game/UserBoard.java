@@ -12,6 +12,7 @@ public class UserBoard extends Board {
         super(input);
         setUsername();
         setGameMode();
+        fillBoardWithShips();
     }
 
     private void setUsername () {
@@ -36,15 +37,15 @@ public class UserBoard extends Board {
                 System.out.println("How do you prefer to position your ships?");
                 System.out.println("     1 - MANUAL      2 - AUTOMATIC       ");
                 System.out.print("# : ");
-                choice = input.nextInt();
-                input.nextLine();
+                choice = this.input.nextInt();
+                this.input.nextLine();
 
                 if (choice != 1 && choice != 2) {
                     System.out.println("\n" + errorModeMsg);
                 }
             } catch (InputMismatchException e) {
                 System.out.println("\n" + errorModeMsg);
-                input.next();
+                this.input.next();
             }
         } while (choice != 1 && choice != 2);
 

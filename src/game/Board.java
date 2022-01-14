@@ -22,11 +22,12 @@ public abstract class Board implements Functions {
     protected Board (Scanner input) {
         this.input = input;
         fillBoardWithSpaces();
-        fillBoardWithShips(this.gameMode);
     }
+
     protected Board() {
+        this.gameMode = 2;
         fillBoardWithSpaces();
-        fillBoardWithShips(2);
+        fillBoardWithShips();
     }
 
     protected String[][] getBoard() {
@@ -41,8 +42,8 @@ public abstract class Board implements Functions {
         }
     }
 
-    public void fillBoardWithShips (int mode) {
-        String[] positions = String.valueOf(mode).equals(String.valueOf(GameMode.MANUAL)) ? placingShipsManual() : placingShipsAutomatic();
+    public void fillBoardWithShips () {
+        String[] positions = String.valueOf(this.gameMode).equals(String.valueOf(GameMode.MANUAL)) ? placingShipsManual() : placingShipsAutomatic();
 
         for (int i = 0; i < 10; i++) {
             int row = positions[i].charAt(0) - 48;
@@ -66,7 +67,7 @@ public abstract class Board implements Functions {
                 System.out.println("\n" + "Where do you want to place the ships? Choose 10 positions");
                 System.out.printf("- Choose a row and a column (RC) (%d)%n", counter);
                 System.out.print("# : ");
-                move = input.nextLine().split("");
+                move = this.input.nextLine().split("");
                 rowByUser = move[0];
                 columnByUser = Integer.parseInt(move[1]);
                 if (rowByUser.matches("[a-jA-J]") && String.valueOf(columnByUser).matches("[0-9]") && move.length == 2) {
@@ -126,17 +127,17 @@ public abstract class Board implements Functions {
         String myBoardContent = gameBoard[linha][column];
 
         switch (content) {
-            case "N":
+            case "N": // ship
                 gameBoard[linha][column] = (Objects.equals(myBoardContent, "N")) ? String.valueOf(Positions.SHIP_ON_ATTACK) : String.valueOf(Positions.ATTACK);
                 otherBoard[linha][column] = String.valueOf(Positions.EMPTY);
                 break;
-            case "*":
-            case "-":
-            case " ":
+            case "*": // attack
+            case "-": // water
+            case " ": // empty
                 gameBoard[linha][column] = (Objects.equals(myBoardContent, "N")) ? String.valueOf(Positions.SHIP_ON_WATER) : String.valueOf(Positions.WATER);
                 break;
-            case "X":
-            case "n":
+            case "X": // ship_on_attack
+            case "n": // ship_on_water
                 gameBoard[linha][column] = (Objects.equals(myBoardContent, "N")) ? String.valueOf(Positions.SHIP_ON_ATTACK) : String.valueOf(Positions.ATTACK);
                 otherBoard[linha][column] = String.valueOf(Positions.WATER);
                 break;
