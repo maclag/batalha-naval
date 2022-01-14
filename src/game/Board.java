@@ -1,6 +1,10 @@
 package game;
 
 import java.util.Objects;
+import java.util.Scanner;
+
+import static colors.ErrorMsgColors.ANSI_RED;
+import static colors.ErrorMsgColors.ANSI_RESET;
 
 public abstract class Board implements Functions {
 
