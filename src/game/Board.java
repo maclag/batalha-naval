@@ -1,5 +1,8 @@
 package game;
 
+import game.enums.GameMode;
+import game.enums.Positions;
+
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -16,14 +19,11 @@ public abstract class Board implements Functions {
     protected String username;
     protected final String[][] gameBoard = new String[BOARD_SIZE][BOARD_SIZE];
 
-    protected Board (String username, int gameMode, Scanner input) {
-        this.username = username;
-        this.gameMode = gameMode;
+    protected Board (Scanner input) {
         this.input = input;
         fillBoardWithSpaces();
         fillBoardWithShips(this.gameMode);
     }
-
     protected Board() {
         fillBoardWithSpaces();
         fillBoardWithShips(2);

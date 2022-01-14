@@ -5,8 +5,6 @@ import game.UserBoard;
 
 import java.util.Scanner;
 
-import static aplication.Questions.*;
-
 public class Main {
 
     public static void main (String[] args) {
@@ -17,11 +15,8 @@ public class Main {
         String row;
         int column;
 
-        String player = setName(input);
-        int mode = setMode(input);
-
         // Create both boards
-        UserBoard userBoard = new UserBoard(player, mode, input);
+        UserBoard userBoard = new UserBoard(input);
         PcBoard pcBoard = new PcBoard();
 
         // Print user board
@@ -31,7 +26,7 @@ public class Main {
         // Starting the game!
         do {
             do {
-                move = userBoard.setPositionAttackUser(input);
+                move = userBoard.setPositionAttackUser();
                 row = move[0];
                 column = Integer.parseInt(move[1]);
             } while (userBoard.cantAttack(row, column));
